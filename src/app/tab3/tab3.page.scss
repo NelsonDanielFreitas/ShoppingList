@@ -1,0 +1,41 @@
+/* src/app/components/product-list/product-list.component.scss */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 16px;
+  }
+  
+  .product-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 8px;
+    padding: 16px;
+    text-align: center;
+    width: calc(50% - 16px);
+  
+    img {
+      border-radius: 8px;
+      height: auto;
+      max-width: 100%;
+    }
+  
+    h2 {
+      font-size: 1.2em;
+      margin: 16px 0 8px;
+    }
+  
+    p {
+      color: #666;
+      margin: 4px 0;
+    }
+  
+    ion-button {
+      background-color: #ff6600;
+      border-radius: 4px;
+      color: white;
+      margin-top: 16px;
+    }
+  }
+  

@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Criar conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h1>Crie a sua conta</h1>
+
+  <form [formGroup]="criarContaForm" (ngSubmit)="criarConta()">
+    <div>
+      <h4>Utilizador</h4>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input type="text" formControlName="Username" placeholder="Introduza o nome de utilizador"></ion-input>
+      </ion-item>
+    </div>
+
+    <div>
+      <h4>Password</h4>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input type="password" formControlName="Password" placeholder="Introduza a palavra-passe"></ion-input>
+      </ion-item>
+    </div>
+
+    <div>
+      <h4>Email</h4>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input type="text" formControlName="Email" placeholder="Introduza o email"></ion-input>
+      </ion-item>
+    </div>
+
+    <div>
+      <h4>Nome</h4>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input type="text" formControlName="Name" placeholder="Introduza o nome"></ion-input>
+      </ion-item>
+    </div>
+
+    <div>
+      <ion-button type="submit">
+        Criar conta
+      </ion-button>
+    </div>
+  </form>
+
+  <div>
+    <ion-button (click)="login()">
+
+    </ion-button>
+  </div>
+</ion-content>

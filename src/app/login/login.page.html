@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div>
+      <h4>Nome de utilizador</h4>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input
+            type="text"
+            formControlName="Username"
+            placeholder="Introduza o seu Username"
+          ></ion-input>
+      </ion-item>
+    </div>
+    <div>
+      <h4>Palavra-passe</h4>
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-input
+            type="text"
+            formControlName="Password"
+            placeholder="Introduza a palavra-passe"
+          ></ion-input>
+      </ion-item>
+    </div>
+    <div>
+      <ion-button 
+      expand="block"
+      type="submit"
+      [disabled]="loginForm.invalid">
+        Iniciar Sessão
+      </ion-button>
+    </div>
+  </form>
+  <div>
+    <ion-button (click)="criarConta()"></ion-button>
+  </div>
+
+</ion-content>
