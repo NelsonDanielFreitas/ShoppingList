@@ -25,10 +25,16 @@ const routes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-      }
+      },
+      {
+        path: 'criarProduto',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./criar-produto/criar-produto.module').then( m => m.CriarProdutoPageModule)
+      },
       
     ]
   },
+  
   
 ];
 @NgModule({

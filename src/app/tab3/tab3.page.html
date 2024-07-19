@@ -4,15 +4,16 @@
       Produtos
     </ion-title>
   </ion-toolbar>
+  <ion-button (click)="CriarProduto()">Criar Produto</ion-button>
 </ion-header>
 
 <ion-content>
   <div class="product-list">
     <div *ngFor="let product of products" class="product-card">
-      <img [src]="product.Image" alt="{{ product.Name }}">
-      <h2>{{ product.Name }}</h2>
-      <p>{{ product.Category }}</p>
-      <p>{{ product.Price | currency }}</p>
+      <img [src]="safeImages[product.image]" >
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.category }}</p>
+      <p>{{ product.price | currency }}</p>
       <ion-button>Editar</ion-button>
     </div>
   </div>

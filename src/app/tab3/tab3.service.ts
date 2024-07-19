@@ -14,6 +14,7 @@ export class Tab3Service implements Resolve<any> {
     onProductsChanged: BehaviorSubject<any>;
     public productsSubject = new BehaviorSubject<Products[]>([]);
     products$ = this.productsSubject.asObservable();
+    public products: Products[];
     constructor(private http: HttpClient) {
         this.onProductsChanged = new BehaviorSubject({});
     }
@@ -35,7 +36,10 @@ export class Tab3Service implements Resolve<any> {
       this.http.post<any>(`${this.apiUrl1}/GetProductsList`, {})
       .subscribe((response) => {
         if(response.code == 1){
+            
             const products = response.data as Products[];
+            this.products = products;
+            console.log(products);
             this.productsSubject.next(products);
         }
       })  
