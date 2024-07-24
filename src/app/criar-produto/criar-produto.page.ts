@@ -4,6 +4,9 @@ import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CriarProdutoService } from './criar-produto.service';
+import { SelectListItem } from '../_models/select-list-item';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-criar-produto',
@@ -16,14 +19,32 @@ export class CriarProdutoPage implements OnInit {
   public productForm: FormGroup;
   @ViewChild('form', { static: true }) form: FormGroup;
   imageUrl: string;
+  public categoriaList: SelectListItem[];
+  public unidadeList: SelectListItem[];
+  public isToastOpen = false;
 
-  constructor(private _formBuilder: FormBuilder, private criarProdutoService: CriarProdutoService) { 
+  constructor(private _formBuilder: FormBuilder, private criarProdutoService: CriarProdutoService, private router: Router,
+    private toastController: ToastController,
+  ) { 
     this.product = new Products();
     this.productForm = this.createForm();
     this.form = this.productForm;
   }
 
   ngOnInit() {
+    this.criarProdutoService.GetCategoryList().pipe()
+      .subscribe((result) => {
+        if(result.code == 1){
+          this.categoriaList = result.data as SelectListItem[];
+        }
+      })
+
+    this.criarProdutoService.GetUnityList().pipe()
+      .subscribe((result) => {
+        if(result.code == 1){
+          this.unidadeList = result.data as SelectListItem[];
+        }
+      })
   }
 
   createForm(): FormGroup{
@@ -55,17 +76,32 @@ export class CriarProdutoPage implements OnInit {
     }
   }
 
-  CriarProduto(){
+  CriarProduto(isOpen: boolean){
     this.productForm.get('Image').setValue(this.imageUrl);
     this.productForm.get('Inactive').setValue(false);
     const data = this.productForm.getRawValue();
-
+    
     this.criarProdutoService.CriarProduto(data).then((response) => {
       if(response.code == 1){
         this.productForm.markAsPristine();
-
+        //this.setOpen(isOpen);
+        //this.router.navigate(['tabs/tab3']);
+        this.Toast();
       }
     })
   }
 
+  async Toast() {
+    const toast = await this.toastController.create({
+      message: 'Produto adicionado com sucesso',
+      duration: 2000,
+      position: 'bottom',
+    });
+
+    await toast.present();
+    this.router.navigate(['tabs/tab3']);
+    // setTimeout(() => {
+    //   this.router.navigate(['tabs/tab5']);
+    // }, 2000);
+  }
 }
