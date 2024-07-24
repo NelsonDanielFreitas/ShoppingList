@@ -9,7 +9,11 @@ import { HttpClient } from "@angular/common/http";
   providedIn: 'root',
 })
 export class CriarProdutoService  {
-    private apiUrl1 = 'https://localhost:7145/api/Products'
+    private apiUrl1 = 'https://localhost:7145/api/Products';
+    public DeleteProductStruct = {
+        Id: 0,
+        Token: ''
+    };
     
     constructor(private http: HttpClient) {
     }
@@ -45,6 +49,17 @@ export class CriarProdutoService  {
         return new Promise((resolve, reject) => {
           this.http
             .post(`${this.apiUrl1}/EditProduct`, product)
+            .subscribe((response: any) => {
+              resolve(response);
+            }, reject);
+        });
+    }
+
+    //pedido para eliminar um produto
+    DeleteProduct(): Promise<any> {
+        return new Promise((resolve, reject) => {
+          this.http
+            .post<any>(`${this.apiUrl1}/DeleteProduct`, this.DeleteProductStruct)
             .subscribe((response: any) => {
               resolve(response);
             }, reject);

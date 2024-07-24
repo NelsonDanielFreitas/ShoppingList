@@ -8,6 +8,7 @@ import { SelectListItem } from '../_models/select-list-item';
 import { Tab3Service } from '../tab3/tab3.service';
 import { CriarProdutoService } from '../criar-produto/criar-produto.service';
 import { LoginService } from '../_services/login.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-editar-produto',
@@ -19,14 +20,14 @@ export class EditarProdutoPage implements OnInit {
   public safeImages: Record<number, SafeUrl> = {};
   public produtoForm: FormGroup;
   @ViewChild('form', { static: true }) form: FormGroup;
-  imageUrl: string;
+  image: string;
   public MudouFoto: string = 'Nao';
   public categoriaList: SelectListItem[];
   public unidadeList: SelectListItem[];
   token: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer, private criarProdutoService: CriarProdutoService,
-    private _formBuilder: FormBuilder, private loginService: LoginService
+    private _formBuilder: FormBuilder, private loginService: LoginService, private toastController: ToastController,
   ) { }
 
   ngOnInit() {
@@ -65,7 +66,7 @@ export class EditarProdutoPage implements OnInit {
       });
 
       if (image.base64String) {
-        this.imageUrl = `data:image/jpeg;base64,${image.base64String}`;
+        this.image = `data:image/jpeg;base64,${image.base64String}`;
         this.safeImages[this.produto.image] = null;
         this.MudouFoto = 'Sim';
       }
@@ -97,7 +98,7 @@ export class EditarProdutoPage implements OnInit {
 
   EditarProduto(){
     if (this.MudouFoto == 'Sim') {
-      this.produtoForm.get('Image').setValue(this.imageUrl);
+      this.produtoForm.get('Image').setValue(this.image);
     } else {
       this.produto.image = `data:image/jpeg;base64,${this.produto.image}`;
       this.produtoForm.get('Image').setValue(this.produto.image);
@@ -111,7 +112,82 @@ export class EditarProdutoPage implements OnInit {
     this.criarProdutoService.EditProduct(data).then((response) => {
       if(response.code == 1){
         this.produtoForm.markAsPristine();
+        this.Toast();
+      }else{
+        this.produtoForm.markAsPristine();
+        this.ErrorToast(response.info.textMessage);
       }
     })
   }
+
+  async ErrorToast(errorMessage: string){
+    const toast = await this.toastController.create({
+      message: `${errorMessage}`,
+      duration: 2000,
+      position: 'bottom',
+    });
+
+    await toast.present();
+  }
+
+  async Toast(){
+    const toast = await this.toastController.create({
+      message: 'Produto editado com sucesso',
+      duration: 2000,
+      position: 'bottom',
+    });
+
+    await toast.present();
+    this.router.navigate(['tabs/tab3']);
+  }
+
+  async EliminarProduto(){
+    this.produtoForm.get('Id').setValue(this.produto.id);
+    this.criarProdutoService.DeleteProductStruct.Id = this.produto.id;
+    this.token = this.loginService.loggedUser.token;
+    this.criarProdutoService.DeleteProductStruct.Token = this.token;
+
+    this.criarProdutoService.DeleteProduct().then(async (response) => {
+      if(response.code == 1){
+        this.criarProdutoService.DeleteProductStruct.Id = 0;
+        this.criarProdutoService.DeleteProductStruct.Token = '';
+        const toast = await this.toastController.create({
+          message: 'Produto eliminado com sucesso',
+          duration: 2000,
+          position: 'bottom',
+        });
+    
+        await toast.present();
+        this.router.navigate(['tabs/tab3']);
+      }else{
+        this.ErrorToast(response.info.textMessage);
+      }
+    });
+
+  }
+
+  setResult(ev) {
+    console.log(`Dismissed with role: ${ev.detail.role}`);
+
+    if (ev.detail.role === 'confirm') {
+      this.EliminarProduto();
+    }
+  }
+
+  public alertButtons2 = [
+    {
+      text: 'Não',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'Sim',
+      role: 'confirm',
+      handler: () => {
+        console.log('Alert confirmed');
+      },
+    },
+  ];
 }

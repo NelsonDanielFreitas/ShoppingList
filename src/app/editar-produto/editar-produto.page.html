@@ -25,7 +25,7 @@
       </ion-row>
       <ion-row >
         <ion-col >
-          <img *ngIf="imageUrl" [src]="imageUrl" alt="Captured Image" />
+          <img *ngIf="image" [src]="image" alt="Captured Image" />
           <img
             *ngIf="safeImages[produto.image]"
             [src]="safeImages[produto.image]"
@@ -109,7 +109,16 @@
             <ion-button (click)="EditarProduto()">Editar</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button >Eliminar</ion-button>
+            <ion-button id="present-alert2">
+              <ion-icon name="close-outline"></ion-icon>
+              <ion-alert
+                trigger="present-alert2"
+                header="Tem acerteza que deseja eliminar o produto?"
+                [buttons]="alertButtons2"
+                (didDismiss)="setResult($event)"
+              ></ion-alert>
+              Eliminar
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
