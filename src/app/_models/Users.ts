@@ -1,6 +1,7 @@
 export class Users{
-    Username: string;
-    Name: string;
-    Email: string;
-    Admin: boolean;
+    username: string;
+    name: string;
+    email: string;
+    admin: boolean;
+    token: string;
 }

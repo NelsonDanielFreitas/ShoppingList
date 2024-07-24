@@ -1,5 +1,5 @@
 export class Products{
-    Id: number;
+    id: number;
     name: string;
     category: string;
     price: number;
@@ -9,7 +9,7 @@ export class Products{
     unity: string;
 
     constructor() {
-        this.Id = -1;
+        this.id = -1;
         this.name = '';
         this.category = '';
         this.price = 0;

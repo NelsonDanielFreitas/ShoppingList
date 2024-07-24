@@ -38,4 +38,16 @@ export class CriarProdutoService  {
                 return response;
             }))
     }
+
+    //pedido para modificar um produto
+    EditProduct(product): Promise<any> {
+        console.log('');
+        return new Promise((resolve, reject) => {
+          this.http
+            .post(`${this.apiUrl1}/EditProduct`, product)
+            .subscribe((response: any) => {
+              resolve(response);
+            }, reject);
+        });
+      }
 }

@@ -31,9 +31,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('./criar-produto/criar-produto.module').then( m => m.CriarProdutoPageModule)
       },
-      
+      {
+        path: 'editar-produto',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./editar-produto/editar-produto.module').then( m => m.EditarProdutoPageModule)
+      },
     ]
   },
+ 
   
   
 ];

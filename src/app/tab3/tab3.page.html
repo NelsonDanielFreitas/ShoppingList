@@ -14,7 +14,7 @@
       <h2>{{ product.name }}</h2>
       <p>{{ product.category }}</p>
       <p>{{ product.price | currency }}</p>
-      <ion-button>Editar</ion-button>
+      <ion-button (click)="EditarProduto(product)">Editar</ion-button>
     </div>
   </div>
 </ion-content>

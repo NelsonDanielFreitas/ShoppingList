@@ -32,6 +32,7 @@ export class Tab3Service implements Resolve<any> {
         });
     }
 
+    //pedido para retornar a lista de todos os produtos
     async getProductsList(){
       this.http.post<any>(`${this.apiUrl1}/GetProductsList`, {})
       .subscribe((response) => {
@@ -44,5 +45,7 @@ export class Tab3Service implements Resolve<any> {
         }
       })  
     }
+
+
 
 }

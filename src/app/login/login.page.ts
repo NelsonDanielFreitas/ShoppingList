@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../_services/login.service';
 import { first } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { Users } from '../_models/Users';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginPage implements OnInit {
   constructor(private router: Router, private _formBuilder: FormBuilder, private loginApi: LoginService, private authService: AuthService) { }
   Username: string;
   Password: string;
+  Users: Users;
   
   ngOnInit() {
     this.loginForm = this._formBuilder.group({
@@ -34,6 +36,7 @@ export class LoginPage implements OnInit {
         if(data.code == 1){
           this.authService.setAuthenticated(true);
           this.router.navigate(['tabs']);
+
         }
       })
   }

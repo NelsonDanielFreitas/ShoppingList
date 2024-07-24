@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Products } from '../_models/Products';
 import { Tab3Service } from './tab3.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -33,5 +33,14 @@ export class Tab3Page implements OnInit{
 
   CriarProduto(){
     this.router.navigate(['criarProduto']);
+  }
+
+  EditarProduto(produto: Products){
+    let navigationsExtra: NavigationExtras = {
+      state: {
+        dadosProduto: produto
+      },
+    };
+    this.router.navigate(['/editar-produto'], navigationsExtra);
   }
 }

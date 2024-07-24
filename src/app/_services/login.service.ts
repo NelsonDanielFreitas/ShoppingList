@@ -35,6 +35,7 @@ export class LoginService {
       .pipe(map((response) => {
         if(response && response.code === 1 && response.data){
           this.loggedUser = response.data;
+          console.log(this.loggedUser.token);
         }
         return response;
       }))
