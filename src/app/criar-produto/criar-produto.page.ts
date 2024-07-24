@@ -87,8 +87,21 @@ export class CriarProdutoPage implements OnInit {
         //this.setOpen(isOpen);
         //this.router.navigate(['tabs/tab3']);
         this.Toast();
+      }else{
+        //console.log(response.info.textMessage);
+        this.ToastError(response.info.textMessage);
       }
     })
+  }
+
+  async ToastError(errorMessage: string){
+    const toast = await this.toastController.create({
+      message: `${errorMessage}`,
+      duration: 2000,
+      position: 'bottom',
+    });
+
+    await toast.present();
   }
 
   async Toast() {
