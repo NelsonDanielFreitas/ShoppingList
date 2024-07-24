@@ -1,17 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Criar Lista
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 50%;">Nome</th>
+        <th style="width: 20%;">Quantidade</th>
+        <th style="width: 20%;">Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">Alface</td>
+        <td>2</td>
+        <td>20</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
 </ion-content>
