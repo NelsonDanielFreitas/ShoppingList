@@ -11,7 +11,7 @@ import { Line } from "../_models/Line";
 })
 export class AddCartService implements Resolve<any>{
     private apiUrl1 = 'https://localhost:7145/api/Products';
-    private cart: Line[] = [];
+    public cart: Line[] = [];
     public routeParams: any;
 
 

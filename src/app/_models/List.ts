@@ -7,5 +7,15 @@ export class List{
     state: string;
     totalPrice: number;
     username: string;
-    date: DatePipe;
+    date: Date;
+
+    constructor(){
+        this.id = -1;
+        this.code = "";
+        this.name = "";
+        this.state = "";
+        this.totalPrice = 0;
+        this.username = "";
+        this.date = new Date();
+    }
 }

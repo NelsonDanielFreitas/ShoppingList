@@ -5,7 +5,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleEditMode()">
-        {{ editMode ? 'Done' : 'Edit' }}
+        {{ editMode ? 'Feito' : 'Editar' }}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -57,7 +57,7 @@
       <ion-col>{{ item.price * item.qtd | currency }}</ion-col>
       <ion-col>
         <ion-button expand="full" color="danger" (click)="removeFromCart(item)" *ngIf="editMode">
-          Remove
+          Remover
         </ion-button>
       </ion-col>
     </ion-row>
@@ -66,6 +66,10 @@
       <!-- <ion-col>{{ total | currency }}</ion-col> -->
     </ion-row>
   </ion-grid>
-  <ion-button expand="full" (click)="IrCarrinho()">Add More Products</ion-button>
+  
+  <ion-button expand="full" (click)="IrCarrinho()">Adicionar Produtos</ion-button>
+  <ion-button expand="full" (click)="FinalizarLista()">Finalizar</ion-button>
+
+  
 
 </ion-content>
