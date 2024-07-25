@@ -1,0 +1,20 @@
+ion-card.uniform-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px; /* Adjust height as needed */
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    max-height: 100%;
+    width: auto;
+  }
+  

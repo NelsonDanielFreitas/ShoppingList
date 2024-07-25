@@ -3,11 +3,18 @@
     <ion-title>
       Criar Lista
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleEditMode()">
+        {{ editMode ? 'Done' : 'Edit' }}
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
+  <!-- <div>
+    <h3>A minha lista de compras: </h3>
+  </div>
   <table>
     <thead>
       <tr>
@@ -17,12 +24,48 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="text-align: center;">Alface</td>
-        <td>2</td>
-        <td>20</td>
+      <tr *ngFor="let item of cartItems">
+        <td style="text-align: center;">{{item.productName}}</td>
+        <td>{{item.qtd}}</td>
+        <td style="text-align: right;">{{item.price}}</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>Produtos</ion-col>
+      <ion-col>Quantidades</ion-col>
+      <ion-col>Preço</ion-col>
+      <ion-col>Ações</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of cartItems">
+      <ion-col>{{ item.productName }}</ion-col>
+      <ion-col>
+        <div *ngIf="editMode">
+
+          <!-- <ion-button size="small" (click)="decreaseQuantity(item)">-</ion-button> -->
+          <ion-icon size="small" name="remove" (click)="decreaseQuantity(item)"></ion-icon>
+          {{ item.qtd }}
+          <!-- <ion-button size="small" (click)="increaseQuantity(item)">+</ion-button> -->
+          <ion-icon name="add" (click)="increaseQuantity(item)"></ion-icon>
+        </div>
+        <div *ngIf="!editMode">
+          {{ item.qtd }}
+        </div>
+      </ion-col>
+      <ion-col>{{ item.price * item.qtd | currency }}</ion-col>
+      <ion-col>
+        <ion-button expand="full" color="danger" (click)="removeFromCart(item)" *ngIf="editMode">
+          Remove
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Total:</ion-col>
+      <!-- <ion-col>{{ total | currency }}</ion-col> -->
+    </ion-row>
+  </ion-grid>
+  <ion-button expand="full" (click)="IrCarrinho()">Add More Products</ion-button>
 
 </ion-content>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { Tab3Service } from './tab3/tab3.service';
 
 const routes: Routes = [
   {
@@ -36,8 +37,17 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('./editar-produto/editar-produto.module').then( m => m.EditarProdutoPageModule)
       },
+      {
+        path: 'add-cart',
+        canActivate: [AuthGuard],
+        resolve: {
+          data: Tab3Service,
+        },
+        loadChildren: () => import('./add-cart/add-cart.module').then( m => m.AddCartPageModule)
+      },
     ]
   },
+  
  
   
   

@@ -6,4 +6,5 @@ export class Line{
     qtd: number;
     price: number;
     totalPrice: number;
+    barcode: string;
 }
