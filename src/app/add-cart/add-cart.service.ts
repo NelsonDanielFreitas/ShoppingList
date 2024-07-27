@@ -13,7 +13,7 @@ export class AddCartService implements Resolve<any>{
     private apiUrl1 = 'https://localhost:7145/api/Products';
     public cart: Line[] = [];
     public routeParams: any;
-
+    public total = 0;
 
     constructor(private http: HttpClient) {
     }
@@ -47,6 +47,8 @@ export class AddCartService implements Resolve<any>{
           };
           this.cart.push(line);
         }
+
+        this.getTotal();
 
     }
 
@@ -85,5 +87,14 @@ export class AddCartService implements Resolve<any>{
         if (index > -1 && this.cart[index].qtd > 1) {
           this.cart[index].qtd -= 1;
         }
+    }
+
+    getTotal() {
+      this.cart.forEach((line) => {
+        this.total += line.price * line.qtd;
+      })
+      
+      return this.total;
+      //return this.cart.reduce((total, item) => total + item.price * item.qtd, 0);
     }
 }

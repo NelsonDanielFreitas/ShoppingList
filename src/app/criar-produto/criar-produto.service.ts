@@ -64,5 +64,7 @@ export class CriarProdutoService  {
               resolve(response);
             }, reject);
         });
-      }
+    }
+
+    
 }

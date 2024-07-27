@@ -22,7 +22,7 @@ export class Tab2Page implements OnInit{
   public lista: List;
   private _unsubscribeAll: Subject<any>;
   token: string = '';
-  
+  total = 0;
 
   constructor(private cartService: AddCartService, private router: Router, private _formBuilder: FormBuilder, private alertController: AlertController,
     private tab2Service: Tab2Service, private loginService: LoginService
@@ -33,9 +33,12 @@ export class Tab2Page implements OnInit{
 
   ngOnInit(){
     this.cartItems = this.cartService.getCartItems();
+    this.total = this.cartService.total;
     this.lista = new List();
     this.listaForm = this.createForm();
     this.form = this.listaForm;
+
+
     
   }
 
@@ -85,6 +88,10 @@ export class Tab2Page implements OnInit{
   }
 
   async FinalizarLista(){
+    if(this.cartService.cart.length == 0){
+      this.presentAlert();
+      return;
+    }
     let name = await this.ColocarNomeLista();
     while (!name || name.trim() === '') {
       if(name == null){
@@ -100,7 +107,8 @@ export class Tab2Page implements OnInit{
 
     this.tab2Service.NewList(data).then((response) => {
       if(response.code == 1){
-        console.log('bemmmm');
+        this.presentAlertSucessoIntroduzir(name);
+        this.cartService.cart = [];
       }
     })
 
@@ -109,7 +117,7 @@ export class Tab2Page implements OnInit{
   async ColocarNomeLista(): Promise<string> {
     return new Promise<string>(async (resolve) => {
       const alert = await this.alertController.create({
-        header: 'Editar perfil',
+        header: 'Introduza o nome da lista',
         inputs: [
           {
             name: 'name',
@@ -147,4 +155,23 @@ export class Tab2Page implements OnInit{
     });
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Erro ao finalizar lista',
+      message: 'É necessário introduzir linhas.',
+      buttons: ['Ok'],
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertSucessoIntroduzir(name: string) {
+    const alert = await this.alertController.create({
+      header: 'Lista criada com sucesso',
+      message: `A lista foi criada com o nome "${name}"`,
+      buttons: ['Ok'],
+    });
+
+    await alert.present();
+  }
 }

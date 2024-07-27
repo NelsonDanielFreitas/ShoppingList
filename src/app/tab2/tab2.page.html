@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <div>
+  <div>
     <h3>A minha lista de compras: </h3>
   </div>
   <table>
@@ -26,28 +26,59 @@
     <tbody>
       <tr *ngFor="let item of cartItems">
         <td style="text-align: center;">{{item.productName}}</td>
-        <td>{{item.qtd}}</td>
-        <td style="text-align: right;">{{item.price}}</td>
+        <td><div *ngIf="editMode">
+
+          <!-- <ion-button size="small" (click)="decreaseQuantity(item)">-</ion-button> -->
+          <ion-icon size="small" name="remove" (click)="decreaseQuantity(item)"></ion-icon>
+          {{ item.qtd }}
+          <!-- <ion-button size="small" (click)="increaseQuantity(item)">+</ion-button> -->
+          <ion-icon name="add" (click)="increaseQuantity(item)"></ion-icon>
+        </div>
+        <div *ngIf="!editMode">
+          {{ item.qtd }}
+        </div></td>
+        <td style="text-align: right;">{{ item.price * item.qtd | currency }}</td>
+        <td><ion-col>
+          <ion-button expand="full" color="danger" (click)="removeFromCart(item)" *ngIf="editMode">
+            Remover
+          </ion-button>
+        </ion-col></td>
       </tr>
     </tbody>
-  </table> -->
+  </table>
 
-  <ion-grid>
+  <ion-row>
+    <ion-col>Total:</ion-col> 
+    <ion-col>{{ total | currency }}</ion-col>
+  </ion-row>
+
+
+
+  <ion-button expand="full" (click)="IrCarrinho()">Adicionar Produtos</ion-button>
+  <ion-button expand="full" (click)="FinalizarLista()">Finalizar</ion-button>
+
+
+
+
+
+
+
+
+
+  <!-- <ion-grid>
     <ion-row>
       <ion-col>Produtos</ion-col>
       <ion-col>Quantidades</ion-col>
       <ion-col>Preço</ion-col>
-      <ion-col>Ações</ion-col>
+      
     </ion-row>
     <ion-row *ngFor="let item of cartItems">
       <ion-col>{{ item.productName }}</ion-col>
       <ion-col>
         <div *ngIf="editMode">
 
-          <!-- <ion-button size="small" (click)="decreaseQuantity(item)">-</ion-button> -->
           <ion-icon size="small" name="remove" (click)="decreaseQuantity(item)"></ion-icon>
           {{ item.qtd }}
-          <!-- <ion-button size="small" (click)="increaseQuantity(item)">+</ion-button> -->
           <ion-icon name="add" (click)="increaseQuantity(item)"></ion-icon>
         </div>
         <div *ngIf="!editMode">
@@ -62,13 +93,12 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>Total:</ion-col>
+      <ion-col>Total:</ion-col> -->
       <!-- <ion-col>{{ total | currency }}</ion-col> -->
-    </ion-row>
-  </ion-grid>
+    <!-- </ion-row>
+  </ion-grid> -->
   
-  <ion-button expand="full" (click)="IrCarrinho()">Adicionar Produtos</ion-button>
-  <ion-button expand="full" (click)="FinalizarLista()">Finalizar</ion-button>
+  
 
   
 
