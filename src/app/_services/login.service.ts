@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Users } from '../_models/Users';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'https://localhost:7145/api/Account'
+  //private apiUrl = 'https://localhost:7145/api/Account'
+  private apiUrl = 'https://b311-2001-8a0-ddc5-5701-c90-f7ce-2199-236a.ngrok-free.app/api/Account'
   public loggedUser: Users;
   constructor(private http: HttpClient) { }
 

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CriarProdutoPageRoutingModule } from './criar-produto-routing.module';
 
 import { CriarProdutoPage } from './criar-produto.page';
+import { QRScanner } from '@ionic-native/qr-scanner';
 
 @NgModule({
   imports: [
@@ -15,8 +16,7 @@ import { CriarProdutoPage } from './criar-produto.page';
     IonicModule,
     CriarProdutoPageRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-
+    ReactiveFormsModule
   ],
   declarations: [CriarProdutoPage]
 })

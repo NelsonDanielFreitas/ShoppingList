@@ -1,15 +1,18 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { BehaviorSubject, map, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Products } from "../_models/Products";
 import { HttpClient } from "@angular/common/http";
+import { map } from 'rxjs/operators';
+
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class CriarProdutoService  {
-    private apiUrl1 = 'https://localhost:7145/api/Products';
+    //private apiUrl1 = 'https://localhost:7145/api/Products';
+    private apiUrl1 = 'https://b311-2001-8a0-ddc5-5701-c90-f7ce-2199-236a.ngrok-free.app/api/Products';
     public DeleteProductStruct = {
         Id: 0,
         Token: ''
@@ -66,5 +69,8 @@ export class CriarProdutoService  {
         });
     }
 
+    getProductDetails(barcode: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl1}/${barcode}`);
+    }
     
 }

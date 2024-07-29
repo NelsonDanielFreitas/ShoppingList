@@ -6,7 +6,10 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CriarProdutoService } from './criar-produto.service';
 import { SelectListItem } from '../_models/select-list-item';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController, Platform, ToastController } from '@ionic/angular';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import jsQR from 'jsqr';
 
 @Component({
   selector: 'app-criar-produto',
@@ -22,13 +25,18 @@ export class CriarProdutoPage implements OnInit {
   public categoriaList: SelectListItem[];
   public unidadeList: SelectListItem[];
   public isToastOpen = false;
+  isScanning: boolean = false;
 
   constructor(private _formBuilder: FormBuilder, private criarProdutoService: CriarProdutoService, private router: Router,
-    private toastController: ToastController,
+    private toastController: ToastController, private qrScanner: QRScanner, private platform: Platform, private alertController: AlertController
   ) { 
     this.product = new Products();
     this.productForm = this.createForm();
     this.form = this.productForm;
+
+    this.platform.ready().then(() => {
+      // Verifique se a plataforma está pronta antes de usar qualquer API de plataforma
+    });
   }
 
   ngOnInit() {
@@ -117,4 +125,200 @@ export class CriarProdutoPage implements OnInit {
     //   this.router.navigate(['tabs/tab5']);
     // }, 2000);
   }
+
+
+
+
+
+  // startScanning() {
+  //   this.qrScanner.prepare()
+  //     .then((status: QRScannerStatus) => {
+  //       if (status.authorized) {
+  //         let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+  //           console.log('Scanned something', text);
+
+  //           // Stop scanning
+  //           this.qrScanner.hide();
+  //           scanSub.unsubscribe();
+
+  //           // Process the scanned barcode data
+  //           this.processBarcodeData(text);
+  //         });
+
+  //         // Show camera preview
+  //         this.qrScanner.show();
+  //       } else if (status.denied) {
+  //         // Camera permission was permanently denied
+  //         this.qrScanner.openSettings();
+  //       } else {
+  //         // Permission was denied, but not permanently. You can ask for permission again at a later time.
+  //       }
+  //     })
+  //     .catch((e: any) => console.log('Error is', e));
+  // }
+
+
+
+
+
+
+
+  async startScanning() {
+    try {
+      // Check and request camera permission
+      const permission = await BarcodeScanner.checkPermission({ force: true });
+      if (permission.granted) {
+        // Hide the background and start scanning
+        BarcodeScanner.hideBackground();
+        this.isScanning = true;
+        const result = await BarcodeScanner.startScan();
+
+        if (result.hasContent) {
+          // Process the scanned barcode data
+          this.processBarcodeData(result.content);
+          this.showAlert('Sucesso', `Código de barras scaned é: ${result.content}`);
+        } else {
+          this.showAlert('Erro', 'Nenhum conteúdo encontrado');
+        }
+
+        // Stop scanning and show the background again
+        this.stopScanning();
+      } else {
+        this.showAlert('Erro', 'Permissão da câmera não concedida');
+        console.error('Permissão da câmera não concedida');
+      }
+    } catch (error) {
+      console.error('Erro durante a digitalização de código de barras', error);
+      this.showAlert('Erro', 'Ocorreu um erro durante a digitalização');
+      this.stopScanning();
+    }
+  }
+
+  processBarcodeData(barcodeData: string) {
+    this.criarProdutoService.getProductDetails(barcodeData).subscribe(
+      (data) => {
+        console.log('Detalhes do produto:', data);
+        // Handle the product details
+      },
+      (error) => {
+        console.error('Erro ao buscar detalhes do produto:', error);
+      }
+    );
+  }
+
+  stopScanning() {
+    BarcodeScanner.showBackground();
+    BarcodeScanner.stopScan();
+    this.isScanning = false;
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  // async startScanning() {
+  //   const permission = await BarcodeScanner.checkPermission({ force: true });
+  //   if (permission.granted) {
+  //     BarcodeScanner.hideBackground();
+  //     this.isScanning = true;
+  //     const result = await BarcodeScanner.startScan();
+
+  //     if (result.hasContent) {
+  //       this.processBarcodeData(result.content);
+  //       this.showAlert('Sucesso', `Código de barras scaned é: ${result.content}`);
+  //     } else {
+  //       this.showAlert('Erro', 'Nenhum conteúdo encontrado');
+  //     }
+
+  //     this.stopScanning();
+  //   } else {
+  //     this.showAlert('Erro', 'Permissão da câmera não concedida');
+  //     console.error('Permissão da câmera não concedida');
+  //   }
+  // }
+
+  // processBarcodeData(barcodeData: string) {
+  //   this.criarProdutoService.getProductDetails(barcodeData).subscribe(
+  //     (data) => {
+  //       console.log('Product details:', data);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching product details:', error);
+  //     }
+  //   );
+  // }
+
+  // stopScanning() {
+  //   BarcodeScanner.showBackground();
+  //   BarcodeScanner.stopScan();
+  //   this.isScanning = false;
+  // }
+
+  // async showAlert(header: string, message: string) {
+  //   const alert = await this.alertController.create({
+  //     header,
+  //     message,
+  //     buttons: ['OK']
+  //   });
+
+  //   await alert.present();
+  // }
+
+  // async takePictureBarcode() {
+  //   try {
+  //     const image = await Camera.getPhoto({
+  //       quality: 90,
+  //       allowEditing: false,
+  //       resultType: CameraResultType.Base64,
+  //       source: CameraSource.Camera,
+  //     });
+
+  //     if (image.base64String) {
+  //       this.imageUrl = `data:image/jpeg;base64,${image.base64String}`;
+  //       this.processImage(image.base64String);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error capturing image:', error);
+  //     this.showAlert('Error', 'Error capturing image');
+  //   }
+  // }
+
+  // processImage(base64String: string) {
+  //   const image = new Image();
+  //   image.src = `data:image/jpeg;base64,${base64String}`;
+  //   image.onload = () => {
+  //     const canvas = document.createElement('canvas');
+  //     const context = canvas.getContext('2d');
+  //     if (context) {
+  //       canvas.width = image.width;
+  //       canvas.height = image.height;
+  //       context.drawImage(image, 0, 0, image.width, image.height);
+  //       const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  //       const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+  //       if (code) {
+  //         this.showAlert('Success', `Barcode scanned: ${code.data}`);
+  //       } else {
+  //         this.showAlert('Error', 'No barcode found');
+  //       }
+  //     }
+  //   };
+  // }
 }

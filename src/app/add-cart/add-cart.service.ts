@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { BehaviorSubject, map, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Products } from "../_models/Products";
 import { HttpClient } from "@angular/common/http";
 import { Line } from "../_models/Line";
+import { map } from 'rxjs/operators';
 
 
 @Injectable({

@@ -9,7 +9,8 @@ import { HttpClient } from "@angular/common/http";
   providedIn: 'root',
 })
 export class Tab3Service implements Resolve<any> {
-    private apiUrl1 = 'https://localhost:7145/api/Products'
+    private apiUrl1 = 'https://localhost:7145/api/Products';
+    //private apiUrl1 = 'https://b311-2001-8a0-ddc5-5701-c90-f7ce-2199-236a.ngrok-free.app/api/Products';
     public routeParams: any;
     onProductsChanged: BehaviorSubject<any>;
     public productsSubject = new BehaviorSubject<Products[]>([]);

@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Products } from '../_models/Products';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { SelectListItem } from '../_models/select-list-item';
-import { Tab3Service } from '../tab3/tab3.service';
-import { CriarProdutoService } from '../criar-produto/criar-produto.service';
-import { LoginService } from '../_services/login.service';
-import { ToastController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Products } from "../_models/Products";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SelectListItem } from "../_models/select-list-item";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CriarProdutoService } from "../criar-produto/criar-produto.service";
+import { LoginService } from "../_services/login.service";
+import { ToastController } from "@ionic/angular";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+
 
 @Component({
   selector: 'app-editar-produto',

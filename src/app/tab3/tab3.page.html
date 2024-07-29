@@ -4,10 +4,16 @@
       Produtos
     </ion-title>
   </ion-toolbar>
-  <ion-button (click)="CriarProduto()">Criar Produto</ion-button>
+  <ion-button *ngIf="!isScanning" (click)="CriarProduto()">Criar Produto</ion-button>
+  <div *ngIf="isScanning" class="scanner-container" style="background-color: transparent;">
+    <div class="scanner-overlay">
+      <div class="scanner-border"></div>
+      <p class="scanner-text">Apontar para o código de barras que se encontra no produto</p>
+    </div>
+  </div>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!isScanning">
   <div class="product-list">
     <div *ngFor="let product of products" class="product-card">
       <img [src]="safeImages[product.image]" >
@@ -17,4 +23,17 @@
       <ion-button (click)="EditarProduto(product)">Editar</ion-button>
     </div>
   </div>
+
+  <div *ngIf="!isScanning" class="ion-text-center">
+    <ion-button expand="full" (click)="startScanning()">Start Scanning</ion-button>
+  </div>
+
+  <div *ngIf="isScanning" class="scanner-container" style="background-color: transparent;">
+    <div class="scanner-overlay">
+      <div class="scanner-border"></div>
+      <p class="scanner-text">Apontar para o código de barras que se encontra no produto</p>
+    </div>
+  </div>
 </ion-content>
+
+

@@ -39,17 +39,7 @@
         formControlName="Name"
         required
     ></ion-input>
-
-    <!-- <ion-input
-      label="Introduza a Categoria"
-      label-placement="floating"
-      fill="solid"
-      type="text"
-      placeholder="Introduza a categoria"
-      formControlName="Category"
-      required
-    ></ion-input> -->
-
+    
     <ion-select
         label="Selecione a categoria do produto"
         label-placement="floating"
@@ -102,4 +92,23 @@
 
       
   </form>
-</ion-content>
+
+  <!-- <ion-content>
+    <ion-button (click)="startScanning()" *ngIf="!isScanning">Scanear Código de Barras</ion-button>
+    <ion-button (click)="stopScanning()" *ngIf="isScanning">Parar Escaneamento</ion-button>
+  
+    <div *ngIf="isScanning" class="scanner-container">
+      <p>A câmera está ativa. Posicione o código de barras dentro da área de digitalização.</p>
+    </div>
+  </ion-content> -->
+
+  <ion-content>
+    <div *ngIf="!isScanning" class="ion-text-center">
+      <ion-button expand="full" (click)="startScanning()">Start Scanning</ion-button>
+    </div>
+  
+    <div *ngIf="isScanning" class="scanner-overlay">
+      <div class="scanner-border"></div>
+      <p class="scanner-text">Apontar para o código de barras que se encontra no produto</p>
+    </div>
+  </ion-content>

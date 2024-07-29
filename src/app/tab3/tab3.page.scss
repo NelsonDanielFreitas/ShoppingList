@@ -1,4 +1,4 @@
-/* src/app/components/product-list/product-list.component.scss */
+//src/app/components/product-list/product-list.component.scss 
 .product-list {
     display: flex;
     flex-wrap: wrap;
@@ -38,4 +38,62 @@
       margin-top: 16px;
     }
   }
+
+
+ion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+}
+
+.ion-text-center {
+  text-align: center;
+}
+
+ion-button {
+  margin-top: 16px;
+}
+
+.scanner-container {
+  position: fixed;
+  top: 0;
+  //margin-top: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  z-index: 1000; /* Ensure the overlay is above other content */
+}
+
+.scanner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  //background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.scanner-border {
+  width: 80%;
+  height: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.scanner-text {
+  color: white;
+  margin-top: 16px;
+  text-align: center;
+}
+
   
