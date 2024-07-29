@@ -32,7 +32,7 @@ export class CriarProdutoService  {
 
     //Pedido para ir buscar as categorias dos produtos
     GetCategoryList(){
-        return this.http.get<any>(`${this.apiUrl1}/GetCategoryList`)
+        return this.http.post<any>(`${this.apiUrl1}/GetCategoryList`, {})
             .pipe(map((response) => {
                 return response;
             }))
@@ -40,7 +40,7 @@ export class CriarProdutoService  {
 
     //Pedido para ir buscar as unidades dos produtos
     GetUnityList(){
-        return this.http.get<any>(`${this.apiUrl1}/GetUnityList`)
+        return this.http.post<any>(`${this.apiUrl1}/GetUnityList`, {})
             .pipe(map((response) => {
                 return response;
             }))
@@ -70,7 +70,7 @@ export class CriarProdutoService  {
     }
 
     getProductDetails(barcode: string): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl1}/${barcode}`);
+        return this.http.post<any>(`${this.apiUrl1}/${barcode}`, {});
     }
     
 }

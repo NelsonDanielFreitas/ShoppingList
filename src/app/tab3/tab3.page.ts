@@ -109,4 +109,8 @@ export class Tab3Page implements OnInit{
 
     await alert.present();
   }
+
+  VoltarTrasBarcode(){
+    this.isScanning = false;
+  }
 }
